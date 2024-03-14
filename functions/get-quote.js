@@ -1,12 +1,10 @@
-const { OpenAIApi } = require('openai');
+const { OpenAI } = require('openai');
+
+const openai = new OpenAI(process.env.OPENAI_API_KEY);
 
 exports.handler = async (event, context) => {
-  const openai = new OpenAIApi({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-
   try {
-    const response = await openai.createCompletion({
+    const response = await openai.Completion.create({
       model: "gpt-3.5-turbo-1106",
       prompt: "Provide an inspirational quote:",
       max_tokens: 60,
