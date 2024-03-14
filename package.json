@@ -1,5 +1,5 @@
 {
-  "name": "gpt-fun",
+  "name": "openai",
   "version": "4.29.0",
   "dependencies": {
     "openai": "latest"
