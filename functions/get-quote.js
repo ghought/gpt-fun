@@ -1,27 +1,26 @@
-// functions/get-quote.js
+const { OpenAIApi } = require('openai');
 
-const { Configuration, OpenAIApi } = require("openai");
-
-exports.handler = async function(event, context) {
-  const configuration = new Configuration({
+exports.handler = async (event, context) => {
+  const openai = new OpenAIApi({
     apiKey: process.env.OPENAI_API_KEY,
   });
-  const openai = new OpenAIApi(configuration);
 
   try {
-    const response = await openai.createCompletion("text-davinci-003", {
+    const response = await openai.createCompletion({
+      model: "text-davinci-003",
       prompt: "Provide an inspirational quote:",
-      max_tokens: 60
+      max_tokens: 60,
     });
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ quote: response.data.choices[0].text.trim() })
+      body: JSON.stringify({ quote: response.data.choices[0].text.trim() }),
     };
   } catch (error) {
+    console.error('Error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Error retrieving quote." })
+      body: JSON.stringify({ error: error.message }),
     };
   }
 };
