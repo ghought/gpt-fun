@@ -7,7 +7,7 @@ exports.handler = async (event, context) => {
 
   try {
     const response = await openai.createCompletion({
-      model: "text-davinci-003",
+      model: "gpt-3.5-turbo-1106",
       prompt: "Provide an inspirational quote:",
       max_tokens: 60,
     });
