@@ -4,18 +4,17 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-exports.handler = async (event, context) => {
+exports.handler = async () => {
   try {
-    const chatCompletion = await openai.chat.create({
-      model: 'gpt-3.5-turbo',
-      messages: [{ role: 'user', content: 'Tell me an inspirational quote.' }],
+    const completion = await openai.createCompletion({
+      model: "gpt-3.5-turbo", // Make sure to replace with the correct model for your key.
+      prompt: "Provide an inspirational quote:",
+      max_tokens: 60,
     });
-
-    const quote = chatCompletion.data.choices[0].message.content;
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ quote }),
+      body: JSON.stringify({ quote: completion.data.choices[0].text.trim() }),
     };
   } catch (error) {
     console.error('Error:', error);
